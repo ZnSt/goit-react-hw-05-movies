@@ -1,16 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const myKey = 'b1cca9f4ff0056a5a4eafc6c5006a5a4';
-//api.themoviedb.org/3/movie/550?api_key=b1cca9f4ff0056a5a4eafc6c5006a5a4
 
 export const Home = () => {
+  const [movies, setMovies] = useState([]);
+  // console.log(movies);
+
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/550?api_key=${myKey}&sort_by=popularity.desc`
-    )
+    fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${myKey}`)
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        setMovies(data);
+      });
   }, []);
 
-  return <h1>Movies Weekly</h1>;
+  return (
+    <div>
+      <h1>Trending Today</h1>
+      <ul>
+        {movies.results?.map(movie => (
+          <li key={movie.id}>
+            <Link
+              to={{
+                pathname: `/movies/${movie.id}`,
+              }}
+            >
+              {movie.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
