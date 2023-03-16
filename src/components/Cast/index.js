@@ -1,1 +1,2 @@
-export * from './Cast';
+import Cast from './Cast';
+export default Cast;

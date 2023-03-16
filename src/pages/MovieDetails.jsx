@@ -1,5 +1,6 @@
-import { useParams, Outlet, useNavigate, Link } from 'react-router-dom';
+import { useParams, Outlet, Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 
 const myKey = 'b1cca9f4ff0056a5a4eafc6c5006a5a4';
 
@@ -7,12 +8,12 @@ const getPosterURL = posterPath => {
   return `https://image.tmdb.org/t/p/w500${posterPath}`;
 };
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { id } = useParams();
   const [detailsMovie, setDetailsMovie] = useState([]);
-  // console.log(detailsMovie);
-  const navigate = useNavigate();
-  const goBack = () => navigate('/');
+
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${myKey}`)
@@ -24,7 +25,7 @@ export const MovieDetails = () => {
 
   return (
     <div>
-      <button onClick={goBack}>Go back</button>
+      <GoBack to={backLinkHref}>Go back</GoBack>
       <div
         style={{
           display: 'flex',
@@ -57,10 +58,14 @@ export const MovieDetails = () => {
         <h1>Aditional Information</h1>
         <ul>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={{ ...location.state }}>
+              Cast
+            </Link>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <Link to="reviews" state={{ ...location.state }}>
+              Reviews
+            </Link>
           </li>
         </ul>
       </div>
@@ -68,3 +73,17 @@ export const MovieDetails = () => {
     </div>
   );
 };
+
+const GoBack = styled(Link)`
+  padding: 5px;
+  text-decoration: none;
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 4px;
+  width: 100px;
+  text-align: center;
+  display: block;
+  margin-bottom: 20px;
+`;
+
+export default MovieDetails;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const myKey = 'b1cca9f4ff0056a5a4eafc6c5006a5a4';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   // console.log(movies);
 
@@ -25,6 +25,7 @@ export const Home = () => {
               to={{
                 pathname: `/movies/${movie.id}`,
               }}
+              state={{ from: '/' }}
             >
               {movie.title}
             </Link>
@@ -34,3 +35,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

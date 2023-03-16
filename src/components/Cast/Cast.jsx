@@ -10,7 +10,7 @@ const getPhotoURL = profilePath => {
   return photo;
 };
 
-export const Cast = () => {
+const Cast = () => {
   const { id } = useParams();
 
   const [actorInfo, setActorInfo] = useState([]);
@@ -44,3 +44,5 @@ export const Cast = () => {
     </div>
   );
 };
+
+export default Cast;
