@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
 import { Container } from './App.styled';
 import SharedLayout from './SharedLayout';
+import NotFound from 'pages/NotFound';
 
 const Home = lazy(() => import('../pages/Home'));
 const Movies = lazy(() => import('../pages/Movies'));
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Container>
